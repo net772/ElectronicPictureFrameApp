@@ -21,24 +21,22 @@ object PermissionUtil {
     /**
      * 권한 체크 및 요청
      */
-    fun easyPermission(activity: Activity, permissionConstant: PermissionConstant, permissionListener: PermissionListener?, isShowDialog : Boolean=true) {
+    fun easyPermission(activity: Activity, permissionConstant: PermissionConstant, permissionListener: PermissionListener?) {
         mPermissionListener = permissionListener
         mPermissionConstant = permissionConstant
 
         val permissions = permissionConstant.getPermissions()
 
-        // 한번이라도 거부했으면, 먼저 다이어로그로 띄우고 묻는다.
-        if (shouldShowRequestPermissionRationale(activity, permissions)) {
-            if (isShowDialog) {
-                showPermissionContextPopup(activity, permissions, mPermissionConstant!!)
-            }
-            else {
+        when {
+            checkPermissions(activity, permissions) -> {
                 requestPermissions(activity, permissions, REQUEST_PERMISSION_RESULT_CODE)
             }
-        } else {
-            if (checkPermissions(activity, permissions))
-                onPermissionGranted()
-            else {
+            // 한번이라도 거부했으면, 먼저 다이얼로그로 띄우고 묻는다.
+            shouldShowRequestPermissionRationale(activity, permissions) -> {
+                showPermissionContextPopup(activity, permissions, mPermissionConstant!!)
+            }
+
+            else -> {
                 requestPermissions(activity, permissions, REQUEST_PERMISSION_RESULT_CODE)
             }
         }

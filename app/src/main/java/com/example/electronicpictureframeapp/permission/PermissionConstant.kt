@@ -8,7 +8,7 @@ const val KEY_DENIED_TITLE = "deniedTitle" // 권한 거부 시, 나오는 제�
 const val KEY_DENIED_MSG = "deniedMsg" // 권한 거부 시, 나오는 내용
 
 enum class PermissionConstant(_permissions: Array<String>, _permissionMap: HashMap<String, String>) {
-    // 저장공간 쓰기
+
     // 저장공간
     EXTERNAL_STORAGE_PERMISSIONS(
     arrayOf(
